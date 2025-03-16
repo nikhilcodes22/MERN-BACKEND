@@ -17,6 +17,9 @@ jobs:
         run: docker build -t nikhilcodes22/nodejs-app .
       - name: Publish Image to Docker Hub
         run: docker push nikhilcodes22/nodejs-app:latest 
+              run: docker run -d -p 4000:4000 --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' nikhilcodes22/nodejs-app
+      - name: List Files in Repository
+              run: ls -la
  
   deploy:
     needs: build
@@ -27,4 +30,4 @@ jobs:
       - name: Delete Old Container
         run: docker rm -f nodejs-app-container || true
       - name: Run Docker Container
-        run: docker run -d -p 4000:4000 --name nodejs-app-container -e MONGO_PASSWORD='${{ secrets.MONGO_PASSWORD }}' nikhilcodes22/nodejs-app
+
